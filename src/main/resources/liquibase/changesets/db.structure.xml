@@ -1,0 +1,57 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
+	<changeSet id="criando estrutura inicial" author="author">
+		<createSequence sequenceName="banco_values_seq" startValue="1"/>
+		<createTable tableName="tb_banco">
+			<column name="id_banco" type="java.sql.Types.BIGINT"
+					valueComputed="[banco_values_seq].NEXTVAL">
+				<constraints
+						primaryKey="true"
+						primaryKeyName="pk_banco"
+						nullable="false"/>
+			</column>
+			<column name="codigo_banco" type="java.sql.Types.BIGINT"/>
+			<column name="numero_agencia" type="java.sql.Types.BIGINT"/>
+		</createTable>
+		<createSequence sequenceName="conta_values_seq" startValue="1"/>
+		<createTable tableName="tb_conta">
+			<column name="id_conta" type="java.sql.Types.BIGINT"
+					valueComputed="[conta_values_seq].NEXTVAL">
+				<constraints
+						primaryKey="true"
+						primaryKeyName="pk_conta"
+						nullable="false"/>
+			</column>
+			<column name="id_banco" type="java.sql.Types.BIGINT">
+				<constraints nullable="true"
+							 foreignKeyName="fk_banco"
+							 references="tb_banco(id_banco)"/>
+			</column>
+			<column name="numero" type="java.sql.Types.BIGINT"/>
+			<column name="saldo" type="java.sql.Types.BIGINT"/>
+		</createTable>
+		<createSequence sequenceName="movimentacao_values_seq" startValue="1"/>
+		<createTable tableName="tb_movimentacao">
+			<column name="id_movimentacao" type="java.sql.Types.BIGINT"
+					valueComputed="[movimentacao_values_seq].NEXTVAL">
+				<constraints
+						primaryKey="true"
+						primaryKeyName="pk_movimentacao"
+						nullable="false"/>
+			</column>
+			<column name="value" type="java.sql.Types.BIGINT"/>
+			<column name="operation_type" type="java.sql.Types.BIGINT"/>
+			<column name="id_origem" type="java.sql.Types.BIGINT">
+				<constraints nullable="true"
+							 foreignKeyName="fk_origem_conta"
+							 references="tb_conta(id_conta)"/>
+			</column>
+			<column name="id_destino" type="java.sql.Types.BIGINT">
+				<constraints nullable="true"
+							 foreignKeyName="fk_destino_conta"
+							 references="tb_conta(id_conta)"/>
+			</column>
+		</createTable>
+	</changeSet>
+</databaseChangeLog>
