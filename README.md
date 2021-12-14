@@ -45,7 +45,7 @@ Descricao: API sera executada na porta 8080.
     * /api/conta/{id}/depositar [POST]
     * /api/conta/{id}/sacar [POST]
     * /api/conta/transferir [POST]
-    * /api/lancamento/{id}/extrato [POST]
+    * /api/conta/{id}/extrato [POST]
 
     
    
